@@ -3,11 +3,15 @@ package com.thoughtworks.capability.demospringioccontainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.WebApplicationContext;
 
 @RestController
 public class GreetingController {
 
     private final GreetingService greetingService;
+
+    @Autowired
+    WebApplicationContext ctx;
 
     @Autowired
     public GreetingController(GreetingService greetingService) {
@@ -17,7 +21,8 @@ public class GreetingController {
 
     @GetMapping("/greet")
     public String greet() {
-        return greetingService.sayHi();
+
+        return ctx.getBean(GreetingService.class).sayHi();
     }
 
 }
